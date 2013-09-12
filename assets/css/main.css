@@ -1,0 +1,28 @@
+#list {
+	top: 50%;
+	left: 50%;
+	width: 50%;
+	height: 50%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: absolute;
+	margin: -25% 0 0 -25%;
+	border: 1px solid #eee;
+}
+
+#list ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#list li {
+	border-bottom: 1px solid #eee;
+	padding: 20px;
+	margin: 0;
+}
+
+li.selected {
+	background: orangered;
+	color: white;
+}
