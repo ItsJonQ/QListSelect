@@ -22,6 +22,10 @@
 	margin: 0;
 }
 
+#list li:focus {
+	outline: none;
+}
+
 li.selected {
 	background: orangered;
 	color: white;
