@@ -6,36 +6,39 @@
 			qLS.qClass = 'qListSelect';
 			qLS.qCount = 0;
 
-			qLS.t = $(this);
-			qLS.li = qLS.t.find('li');
+			qLS.list = $(this);
+			qLS.listItem = qLS.list.find('li');
 			qLS.selectClass = 'selected';
-			qLS.select = qLS.li.hasClass(qLS.selectClass);
+			qLS.select = qLS.listItem.hasClass(qLS.selectClass);
 
 			var settings = $.extend({
 				initialFocus		: true,
 				keyboardActions		: true
-			});
+			}, options);
 
 			qLS.actionSelect = function(ele){
-				qLS.li.removeClass(qLS.selectClass);
+				qLS.listItem.removeClass(qLS.selectClass);
 				ele.addClass(qLS.selectClass).focus();
 			};
 
 			qLS.actionSelectFocus = function(direction) {
-				var ele = qLS.t.find('li:focus');
-				ele.removeClass(qLS.selectClass);
-				if(direction === 'next') {
-					if(!ele.is(':last-child')) {
-						ele.next().focus().addClass(qLS.selectClass);
-					} else {
-						ele.addClass(qLS.selectClass);
+				var ele = qLS.list.find('li:focus');
+				if(direction !== null) {
+					ele.removeClass(qLS.selectClass);
+					if(direction === 'next') {
+						if(!ele.is(':last-child')) {
+							ele.next().focus().addClass(qLS.selectClass);
+						} else {
+							ele.addClass(qLS.selectClass);
+						}
+					} else if (direction === 'prev' || direction === 'previous' ) {
+						if(!ele.is(':first-child')) {
+							ele.prev().focus().addClass(qLS.selectClass);
+						} else {
+							ele.addClass(qLS.selectClass);
+						}
 					}
-				} else if (direction === 'prev' || direction === 'previous' ) {
-					if(!ele.is(':first-child')) {
-						ele.prev().focus().addClass(qLS.selectClass);
-					} else {
-						ele.addClass(qLS.selectClass);
-					}
+					// qLS.list.scrollTo('.'+qLS.selectClass);
 				} else {
 					return false;
 				}
@@ -43,14 +46,14 @@
 
 			// Adding TabIndex to List Items
 			var liCount = 0;
-			qLS.li.each(function(){
+			qLS.listItem.each(function(){
 				liCount++;
 				$(this).attr('tabindex', liCount);
 			});
 
 			// Settings: Initial Focus
 			if(settings.initialFocus) {
-				qLS.li.first().focus().addClass(qLS.selectClass);
+				qLS.listItem.first().focus().addClass(qLS.selectClass);
 			}
 
 			// Settings: Keyboard Actions
@@ -68,11 +71,11 @@
 			}
 
 			return this.each(function(){
-				qLS.t.each(function(){
+				qLS.list.each(function(){
 					qLS.qCount++;
 					$(this).addClass(qLS.qClass).addClass('qLS-id-'+qLS.qCount);
 				});
-				qLS.li.on('click', function() {
+				qLS.listItem.on('click', function() {
 					qLS.actionSelect($(this));
 				});	
 			});
