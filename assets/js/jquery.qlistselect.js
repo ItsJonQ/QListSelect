@@ -3,6 +3,9 @@
 		var qLS = {};
 		// Continue with Plugin if Selector is a "UL"
 		if($(this).is('ul')) {
+			qLS.qClass = 'qListSelect';
+			qLS.qCount = 0;
+
 			qLS.t = $(this);
 			qLS.li = qLS.t.find('li');
 			qLS.selectClass = 'selected';
@@ -47,7 +50,7 @@
 
 			// Settings: Initial Focus
 			if(settings.initialFocus) {
-				qLS.li.first().focus();
+				qLS.li.first().focus().addClass(qLS.selectClass);
 			}
 
 			// Settings: Keyboard Actions
@@ -65,8 +68,10 @@
 			}
 
 			return this.each(function(){
-				qLS.li.first().addClass(qLS.selectClass);
-
+				qLS.t.each(function(){
+					qLS.qCount++;
+					$(this).addClass(qLS.qClass).addClass('qLS-id-'+qLS.qCount);
+				});
 				qLS.li.on('click', function() {
 					qLS.actionSelect($(this));
 				});	
