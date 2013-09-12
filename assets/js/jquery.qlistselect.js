@@ -38,6 +38,8 @@
 							ele.addClass(qLS.selectClass);
 						}
 					}
+					// Scroll To Function
+					// http://jsfiddle.net/coma/9KvhL/25/
 					// qLS.list.scrollTo('.'+qLS.selectClass);
 				} else {
 					return false;
