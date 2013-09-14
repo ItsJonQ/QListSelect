@@ -26,7 +26,6 @@
 				var eleNew,
 					ele = qLS.list.find('li:focus');
 				if(direction !== null) {
-					
 					if(direction === 'next') {
 						if(!ele.is(':last-child')) {
 							eleNew = ele.next();
@@ -48,15 +47,19 @@
 			};
 
 			// Adding TabIndex to List Items
-			var liCount = 0;
-			qLS.listItem.each(function(){
-				liCount++;
-				$(this).attr('tabindex', liCount);
-			});
+			qLS.assignIndex = function() {
+				var liCount = 0;
+				qLS.listItem.each(function(){
+					liCount++;
+					$(this).attr('tabindex', liCount);
+				});
+			};
 
 			// Settings: Initial Focus
 			if(settings.initialFocus) {
-				qLS.listItem.first().focus().addClass(qLS.selectClass);
+				var firstItem = qLS.listItem.first();
+				firstItem.siblings().removeClass(qLS.selectClass).blur();
+				firstItem.addClass(qLS.selectClass);
 			}
 
 			// Settings: Keyboard Actions
@@ -74,9 +77,11 @@
 			}
 
 			return this.each(function(){
+				qLS.assignIndex();
 				qLS.list.each(function(){
 					qLS.qCount++;
 					$(this).addClass(qLS.qClass).addClass('qLS-id-'+qLS.qCount);
+					settings.initialFocus ? $('.'+qLS.selectClass).focus() : false;
 				});
 				qLS.listItem.on('click', function() {
 					qLS.actionSelect($(this));
