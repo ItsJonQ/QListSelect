@@ -1,6 +1,6 @@
 (function($) {
 	$(document).ready( function() {
-    	$('#list ul').qListSelect({
+    	$('#list').qListSelect({
 			// initialFocus : false,
 			// keyboardActions: false
     	});

@@ -2,11 +2,12 @@
 	$.fn.qListSelect = function(options) {
 		var qLS = {};
 		// Continue with Plugin if Selector is a "UL"
-		if($(this).is('ul')) {
+		if($(this).find('ul').length) {
 			qLS.qClass = 'qListSelect';
 			qLS.qCount = 0;
 
-			qLS.list = $(this);
+			qLS.obj = $(this)
+			qLS.list = qLS.obj.find('ul');
 			qLS.listItem = qLS.list.find('li');
 			qLS.selectClass = 'selected';
 			qLS.select = qLS.listItem.hasClass(qLS.selectClass);
@@ -22,25 +23,25 @@
 			};
 
 			qLS.actionSelectFocus = function(direction) {
-				var ele = qLS.list.find('li:focus');
+				var eleNew,
+					ele = qLS.list.find('li:focus');
 				if(direction !== null) {
-					ele.removeClass(qLS.selectClass);
+					
 					if(direction === 'next') {
 						if(!ele.is(':last-child')) {
-							ele.next().focus().addClass(qLS.selectClass);
+							eleNew = ele.next();
 						} else {
-							ele.addClass(qLS.selectClass);
+							eleNew = ele;
 						}
 					} else if (direction === 'prev' || direction === 'previous' ) {
 						if(!ele.is(':first-child')) {
-							ele.prev().focus().addClass(qLS.selectClass);
+							eleNew = ele.prev();
 						} else {
-							ele.addClass(qLS.selectClass);
+							eleNew = ele;
 						}
 					}
-					// Scroll To Function
-					// http://jsfiddle.net/coma/9KvhL/25/
-					// qLS.list.scrollTo('.'+qLS.selectClass);
+					eleNew.siblings().removeClass(qLS.selectClass);
+					eleNew.focus().addClass(qLS.selectClass);
 				} else {
 					return false;
 				}
