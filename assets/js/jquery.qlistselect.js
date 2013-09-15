@@ -13,13 +13,14 @@
 			qLS.select = qLS.listItem.hasClass(qLS.selectClass);
 
 			var settings = $.extend({
+				cursorPointer		: true,
+				disableSelection	: false,
 				initialFocus		: true,
-				keyboardActions		: true,
-				offsetTop			: 0
+				keyboardActions		: true
 			}, options);
 
 			qLS.actionSelect = function(ele){
-				qLS.listItem.removeClass(qLS.selectClass);
+				ele.siblings().removeClass(qLS.selectClass);
 				ele.addClass(qLS.selectClass);
 			};
 
@@ -83,6 +84,19 @@
 				} else {
 					return false;
 				}				
+			}
+
+			// Settings: Cursor Pointer
+			if(settings.cursorPointer) {
+				qLS.list.css('cursor', 'pointer');
+			}
+
+			// Settings: Disable Selection
+			if(settings.disableSelection) {
+				qLS.list
+					.attr('unselectable', 'on')
+					.css('user-select', 'none')
+					.on('selectstart', false);
 			}
 
 			// Settings: Initial Focus
