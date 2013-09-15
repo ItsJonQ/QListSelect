@@ -53,6 +53,7 @@
 					b = list,
 					bR = b.height(),
 					n = a.next(),
+					nH = n.outerHeight(),
 					p = a.prevAll(),
 					pH = p.outerHeight(),
 					pS = p.size(),
@@ -74,7 +75,7 @@
 					$.each(p, function(){
 						nTotal += $(this).outerHeight();
 					});
-					if(a.offset().top - list.offset().top + h > bR) {
+					if(a.offset().top - list.offset().top + h + (nH / 2)> bR) {
 						b.scrollTop(nTotal - h - pH);
 					}
 				} else if (direction === 'reset') {
